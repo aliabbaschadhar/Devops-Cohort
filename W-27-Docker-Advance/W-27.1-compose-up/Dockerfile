@@ -12,6 +12,9 @@ ENV DATABASE_URL=postgresql://postgres:mysecretpassword@localhost:5432/postgres
 
 RUN npx prisma migrate dev
 RUN npx prisma generate
-RUN npM run build
+RUN npm run build
+
+# EXPOSE 3000 
+# It doesn't do any substantial but it is good for documentation and needed in only legacy docker 
 
 CMD [ "npm", "start" ]

@@ -15,10 +15,13 @@
 ## Docker installation
 
 - [Install Docker](https://docs.docker.com/get-docker/)
+- Create a network because we have two containers and they have to talk to each other
+  - `docker network create user-project`
 - Start postgres
-  - docker run -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres
-- Build the image - `docker build -t user-project .`
-- Run the image - `docker run -p 3000:3000 user-project`
+  - `docker run --network user-project --name postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres`
+- Build the image - `docker build --network=host -t user-project .`
+<!--  build the image on the host side and take to the DB on the host side -->
+- Run the image - `docker run --network user-project -e DATABASE_URL=postgres://postgres:mysecretpassword@postgres:5432/postgres -p 3000:3000 user-project`
 
 ## Docker Compose installation steps
 

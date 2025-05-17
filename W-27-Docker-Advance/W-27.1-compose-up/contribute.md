@@ -14,4 +14,14 @@
 
 ## Docker installation
 
+- [Install Docker](https://docs.docker.com/get-docker/)
+- Start postgres
+  - docker run -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres
+- Build the image - `docker build -t user-project .`
+- Run the image - `docker run -p 3000:3000 user-project`
+
 ## Docker Compose installation steps
+
+- [Install Docker](https://docs.docker.com/get-docker/)
+- Docker compose
+- Run `docker compose up`

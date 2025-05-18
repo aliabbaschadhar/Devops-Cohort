@@ -10,9 +10,11 @@ services:
 
   user_app:
     build:
-      network: host
-      # Use the Dockerfile in the current directory
       context: .
+      # If the dockerfile is in the root directory and the docker-compose.yml is in a subdirectory, use:
+      # context: ./code
+      # If the dockerfile is in a subdirectory, use:
+      # context: ./subdirectory
       dockerfile: Dockerfile
     environment:
       - DATABASE_URL=postgresql://postgres:mysecretpassword@postgres:5432/postgres

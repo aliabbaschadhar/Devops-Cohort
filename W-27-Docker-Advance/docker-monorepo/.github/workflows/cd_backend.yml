@@ -21,4 +21,5 @@ jobs:
         with: 
           context: .
           file: ./docker/Dockerfile.backend
+          push: true
           tags: aliabbaschadhar003/test:${{github.sha}}

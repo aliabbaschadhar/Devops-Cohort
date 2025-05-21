@@ -20,14 +20,10 @@ RUN bun install
 COPY ./packages ./packages
 COPY ./apps/ws ./apps/ws
 
+RUN apt-get update -y && apt-get install -y openssl
+
 RUN bun run db:generate
-
-# Set working directory to the ws app directory
-WORKDIR /usr/src/app/apps/ws
-
-# The first WORKDIR /usr/src/app sets up the base directory where you'll copy your monorepo files
-
-# The second WORKDIR /usr/src/app/apps/ws changes to the specific app directory where you want to run your ws command
+# To generate the prisma client
 
 EXPOSE 8081
 

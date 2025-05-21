@@ -24,15 +24,11 @@ RUN bun install
 COPY ./packages ./packages
 COPY ./apps/web ./apps/web
 
+RUN sudo apt-get update -y && sudo apt-get install -y openssl
+
 RUN bun run db:generate
 RUN DATABASE_URL=${DATABASE_URL} bun run build
 
-# Set working directory to the web app directory
-WORKDIR /usr/src/app/apps/web
-
-# The first WORKDIR /usr/src/app sets up the base directory where you'll copy your monorepo files
-
-# The second WORKDIR /usr/src/app/apps/web changes to the specific app directory where you want to run your web command
 
 EXPOSE 3000
 

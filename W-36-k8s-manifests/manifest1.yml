@@ -1,0 +1,32 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+          - containerPort: 80
+---
+kind: Service 
+apiVersion: v1
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: nginx
+  ports:
+  - targetPort: 80
+    port: 80
+    protocol: TCP
+  type: ClusterIP

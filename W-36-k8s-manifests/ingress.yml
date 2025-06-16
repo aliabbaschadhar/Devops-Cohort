@@ -1,0 +1,31 @@
+kind: Ingress 
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: prod-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: aliabbas.xyz
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: backend-service
+              port:
+                number: 80
+        - path: /backend
+          pathType: Prefix
+          backend:
+            service:
+              name: backend-service
+              port:
+                number: 80
+        - path: /frontend
+          pathType: Prefix
+          backend:
+            service:
+              name: frontend-service
+              port:
+                number: 80

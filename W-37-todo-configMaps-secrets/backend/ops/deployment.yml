@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-backend-deployment
+  
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: todo
+  template:
+    metadata:
+      labels:
+        app: todo
+    spec:
+      containers:
+        - name: todo-app-backend
+          image: aliabbaschadhar003/todo-app-test:2  
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name:  env-file
+              readOnly: true
+              mountPath:  "/app/secret"
+      volumes:
+        - name:  env-file
+          secret:
+            secretName: backend-secret

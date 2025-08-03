@@ -37,7 +37,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # Runtime and temporary files
-*.lock
 *.tmp
 *.swp
 *.bak

@@ -1,15 +1,26 @@
-import { type WebSocket, WebSocketServer } from "ws";
+import { WebSocket as WebSocketWsType, WebSocketServer } from "ws";
 
-const wss = new WebSocketServer({ port: 8080 })
+const wss = new WebSocketServer({ port: 8081 })
 
 interface Room {
-  sockets: WebSocket[]
+  sockets: WebSocketWsType[]
 }
 
 const rooms: Record<string, Room> = {
   // room1:{
   //   sockets:[ws1,ws2,ws3]
   // }
+}
+
+const RELAYER_URL = "ws://localhost:3000"
+const relayerSocket = new WebSocket(RELAYER_URL)
+
+relayerSocket.onmessage = ({ data }) => {
+  const parsedData = JSON.parse(data)
+  if (parsedData.type === "chat") {
+    const room = parsedData.room
+    rooms[room].sockets.map(socket => socket.send(data))
+  }
 }
 
 wss.on('connection', function connection(ws) {
@@ -28,8 +39,7 @@ wss.on('connection', function connection(ws) {
     }
 
     if (parsedData.type == "chat") {
-      const room = parsedData.room
-      rooms[room].sockets.map((socket) => socket.send(parsedData.message))
+      relayerSocket.send(data) // Data will be send to relayer socket 
     }
   });
 
